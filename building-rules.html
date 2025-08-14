@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DOORS: Paradox Building Rules</title>
+  <meta name="color-scheme" content="dark light">
+  <style>
+    :root{
+      --bg: #0b0d13;
+      --surface: #121623;
+      --surface-2: #1a2032;
+      --border: #2b3550;
+      --text: #e8ecf7;
+      --muted: #a9b2c7;
+
+      --accent-1: rgb(0,106,255);
+      --accent-2: rgb(157,0,255);
+      --accent-3: rgb(255,110,221);
+      --accent: var(--accent-1);
+      --accent-gradient: linear-gradient(135deg,var(--accent-1),var(--accent-2) 45%,var(--accent-3));
+
+      --radius: 12px;
+      --shadow: 0 8px 32px rgba(0,0,0,.35);
+      --spacing-1: .25rem;
+      --spacing-2: .5rem;
+      --spacing-3: .75rem;
+      --spacing-4: 1rem;
+      --spacing-5: 1.5rem;
+      --spacing-6: 2rem;
+      --maxw: 1200px;
+
+      --grid-unit: 0.125;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font: 15px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(0,106,255,.08), rgba(0,0,0,0)) no-repeat,
+                  radial-gradient(1200px 800px at 90% 10%, rgba(157,0,255,.08), rgba(0,0,0,0)) no-repeat,
+                  var(--bg);
+    }
+
+    video:not([poster]):not([src]){display:none;}
+
+    a{color:inherit}
+    h1,h2,h3,h4{line-height:1.2;margin:0 0 .4em}
+    h1{font-size:clamp(28px,4vw,40px)}
+    h2{font-size:clamp(22px,3vw,28px)}
+    h3{font-size:clamp(18px,2.2vw,22px)}
+    p{margin:.2em 0 .9em 0}
+    code,kbd{background:rgba(255,255,255,.06);padding:.1em .4em;border-radius:8px;border:1px solid rgba(255,255,255,.08)}
+    pre{background:var(--surface-2); padding:1rem; border-radius:var(--radius); overflow:auto; border:1px solid var(--border)}
+
+    .grid{display:grid;gap:var(--spacing-6)}
+
+    header{
+      position: sticky; top:0; z-index:50;
+      backdrop-filter: saturate(120%) blur(8px);
+      background: color-mix(in srgb, var(--surface) 90%, transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .header-inner{
+      margin:0 auto; max-width:var(--maxw);
+      display:flex; align-items:center; gap:var(--spacing-4);
+      padding: .8rem var(--spacing-4);
+    }
+    .brand{
+      display:flex; align-items:center; gap:.75rem; font-weight:700;
+      letter-spacing:.2px;
+    }
+    .brand-mark{
+      width:32px; height:32px; border-radius:10px;
+      background: var(--accent-gradient);
+      box-shadow: 0 2px 10px rgba(0,0,0,.4), inset 0 0 12px rgba(255,255,255,.15);
+    }
+    .muted{color:var(--muted)}
+
+    .actions{margin-left:auto; display:flex; gap:.5rem; align-items:center}
+    .btn{
+      appearance:none; border:1px solid var(--border);
+      background: var(--surface-2); color:var(--text);
+      padding:.55rem .85rem; border-radius:10px; cursor:pointer;
+      transition:.15s ease all;
+    }
+    .btn:hover{border-color: color-mix(in srgb, var(--accent-1) 40%, var(--border)); transform: translateY(-1px)}
+    .btn.primary{background: var(--accent-gradient); border: none; font-weight:600}
+
+    .layout{
+      max-width:var(--maxw); margin: 1rem auto; display:grid;
+      grid-template-columns: 280px 1fr; gap: var(--spacing-6);
+      padding: 0 var(--spacing-4) var(--spacing-6);
+    }
+    nav#toc{
+      position: sticky; top: 72px; align-self:start;
+      border:1px solid var(--border); background: var(--surface); border-radius: var(--radius);
+      padding: var(--spacing-4);
+      box-shadow: var(--shadow);
+    }
+    #toc h3{margin-bottom:.6rem}
+    #toc .search{
+      width:100%; padding:.55rem .7rem; border-radius:8px;
+      border:1px solid var(--border); background:var(--surface-2); color:var(--text);
+      margin-bottom:.8rem;
+    }
+    #toc ul{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.35rem}
+    #toc a{display:block; text-decoration:none; padding:.35rem .4rem; border-radius:8px; color:var(--muted)}
+    #toc a.active, #toc a:hover{color:var(--text); background:rgba(0,106,255,.08)}
+
+    main{
+      min-width:0;
+      display:grid; gap: var(--spacing-6);
+    }
+
+    .hero{
+      border:1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)) , var(--surface);
+      padding: clamp(1rem, 2vw, 2rem); border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero h1 span{background:var(--accent-gradient); -webkit-background-clip:text; background-clip:text; color:transparent}
+
+    section.rule-section{
+      border:1px solid var(--border); background:var(--surface);
+      border-radius: var(--radius); overflow:hidden; box-shadow: var(--shadow);
+    }
+    .section-head{
+      padding: 1.1rem 1.2rem; display:flex; gap: .8rem; align-items:center;
+      background: linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.15));
+      border-bottom:1px solid var(--border);
+    }
+    .section-head .icon{
+      width:30px; height:30px; border-radius:8px;
+      background: var(--accent-gradient); flex:0 0 auto;
+      box-shadow: inset 0 0 10px rgba(255,255,255,.14);
+    }
+    .section-body{padding:1.1rem}
+    .section-meta{margin-left:auto; display:flex; gap:.6rem; align-items:center}
+    .small{font-size:.9em; color:var(--muted)}
+    .anchor{
+      margin-left:auto; opacity:.5; text-decoration:none;
+    }
+
+    details.block{
+      border:1px solid var(--border);
+      background: var(--surface-2);
+      border-radius: 10px; padding:.6rem .75rem; margin:.75rem 0;
+    }
+    details.block[open]{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)), var(--surface-2)}
+    details.block summary{cursor:pointer; list-style:none; font-weight:600}
+    details.block summary::-webkit-details-marker{display:none}
+
+    .guides{display:grid; gap:1rem; grid-template-columns: repeat(2, minmax(0,1fr))}
+    .guide{
+      border:1px solid var(--border); border-radius:10px; padding:.8rem; background: var(--surface-2);
+    }
+    .guide h4{margin-bottom:.35rem}
+    .guide[data-type="do"] h4{color: color-mix(in srgb, lime 50%, var(--text))}
+    .guide[data-type="dont"] h4{color: color-mix(in srgb, red 45%, var(--text))}
+
+    .media-grid{display:grid; gap:.8rem; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); margin:.6rem 0}
+    figure{margin:0; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#0f1320}
+    figure img, figure video{display:block; width:100%; height:auto}
+    figure figcaption{padding:.5rem .7rem; color:var(--muted); font-size:.9em; border-top:1px solid var(--border)}
+
+    table{width:100%; border-collapse:collapse; overflow:hidden; border-radius:10px; border:1px solid var(--border)}
+    th,td{padding:.6rem .7rem; border-bottom:1px solid var(--border)}
+    thead th{background:var(--surface-2); text-align:left}
+    tbody tr:hover{background:rgba(255,255,255,.03)}
+
+    .callout{
+      display:flex; gap:.8rem; border:1px solid var(--border); border-left:5px solid var(--accent-2);
+      padding:.8rem; border-radius:10px; background: color-mix(in srgb, var(--surface-2) 85%, transparent);
+    }
+
+    footer{opacity:.7; font-size:.9em; text-align:center; padding:2rem 0}
+
+    @media (max-width: 980px){
+      .layout{grid-template-columns: 1fr}
+      nav#toc{position: relative; top:0}
+      .guides{grid-template-columns: 1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div>
+          <div>DOORS: Paradox Building Rules</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav id="toc">
+      <h3>Contents</h3>
+      <input class="search" id="tocSearch" placeholder="filter sections…">
+      <ul id="tocList"></ul>
+      <div class="small muted" style="margin-top:.8rem">
+        Tip: click the # next to a heading to copy a deep link.
+      </div>
+    </nav>
+
+    <main id="content" class="grid">
+      <section class="hero">
+        <h1><span>Building Standards</span> for DOORS: Paradox</h1>
+        <p class="muted">Everything here is a requirement. If a build doesn't meet these rules, the room will NOT be added to the game. Keep scale, distance, assets, and hierarchy consistent across all rooms.</p>
+        <p class="muted">Under no circumstance should you ignore these rules, if these rules are too difficult to understand for you, you might not be suitable to be a builder for Paradox, this is not being rude, this is enforcing quality.</p>
+      </section>
+
+      <section class="rule-section" data-section="Example Media">
+        <div class="section-head">
+          <div class="icon" aria-hidden="true"></div>
+          <div>
+            <h2>Example Media</h2>
+            <div class="small muted">Demonstration of image + video in a section.</div>
+          </div>
+          <a class="anchor small muted" href="#" aria-label="anchor">#</a>
+        </div>
+        <div class="section-body">
+          <div class="media-grid">
+            <figure>
+              <img
+                src="https://raw.githubusercontent.com/Project-Inc/Paradox-Building-Rules/main/assets/images/Thing.png"
+                alt="Thing.png reference">
+              <figcaption>Reference image (Thing.png)</figcaption>
+            </figure>
+
+            <figure>
+              <video
+                src="https://raw.githubusercontent.com/Project-Inc/Paradox-Building-Rules/main/assets/videos/yeah.mp4"
+                controls
+                muted
+                preload="metadata"
+                poster="https://raw.githubusercontent.com/Project-Inc/Paradox-Building-Rules/main/assets/images/Thing.png">
+              </video>
+              <figcaption>Demo clip (yeah.mp4)</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Utilities
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+    const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+
+    // Grid unit label
+    const gridUnit = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--grid-unit')) || 0.125;
+    const fmt = n => (Math.round(n*1000)/1000).toString();
+    const lbl1 = document.querySelector('#gridUnitLabel');
+    const lbl2 = document.querySelector('#gridUnitLabel2');
+    if (lbl1) lbl1.textContent = fmt(gridUnit);
+    if (lbl2) lbl2.textContent = fmt(gridUnit);
+
+    // TOC build & anchors
+    function buildTOC(){
+      const list = $('#tocList');
+      list.innerHTML='';
+      $$('main h2').forEach(h2 => {
+        const id = h2.id || (h2.id = slug(h2.textContent));
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = '#'+id;
+        a.textContent = h2.textContent;
+        li.appendChild(a);
+        list.appendChild(li);
+        // add anchor on header card
+        const card = h2.closest('.rule-section');
+        const anchor = card.querySelector('.anchor');
+        if(anchor){
+          anchor.href = '#'+id;
+          anchor.addEventListener('click', e => {
+            e.preventDefault();
+            const url = location.origin + location.pathname + '#' + id;
+            navigator.clipboard.writeText(url).then(()=> toast('Link copied'));
+          });
+        }
+      });
+    }
+
+    // Scrollspy
+    function spyTOC(){
+      const links = $$('#toc a');
+      const sections = $$('main h2').map(h => document.getElementById(h.id));
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            links.forEach(a => a.classList.toggle('active', a.getAttribute('href')==='#'+entry.target.id));
+          }
+        });
+      }, {rootMargin:'-40% 0px -55% 0px', threshold: 0});
+      sections.forEach(sec => io.observe(sec));
+    }
+
+    // Simple filter
+    $('#tocSearch').addEventListener('input', e => {
+      const q = e.target.value.trim().toLowerCase();
+      $$('#content .rule-section').forEach(sec => {
+        const txt = sec.textContent.toLowerCase();
+        sec.style.display = txt.includes(q) ? '' : 'none';
+      });
+    });
+
+    // Toast
+    let toastEl;
+    function toast(msg){
+      if(!toastEl){
+        toastEl = document.createElement('div');
+        toastEl.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#111927;border:1px solid var(--border);padding:.6rem 1rem;border-radius:999px;box-shadow:var(--shadow);z-index:9999;opacity:0;transition:opacity .15s';
+        document.body.appendChild(toastEl);
+      }
+      toastEl.textContent = msg;
+      toastEl.style.opacity = '1';
+      setTimeout(()=> toastEl.style.opacity='0', 1200);
+    }
+
+    // Init
+    buildTOC();
+    spyTOC();
+  </script>
+</body>
+</html>
