@@ -1,10 +1,26 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DOORS: Paradox Building Rules</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta property="og:title" content="DOORS: Paradox Building Rules" />
+  <meta property="og:description"
+    content="Here is where you can see all of the Project-Inc DOORS: Paradox Building Rules" />
+  <meta property="og:url" content="/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/images/ProjectInc.png" />
+  <meta name="author" content="Project-Inc" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="DOORS: Paradox Building Rules" />
+  <meta name="twitter:description"
+    content="DOORS: Paradox Building Rules" />
+  <meta name="twitter:image" content="assets/images/ProjectInc.png" />
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+  <meta name="theme-color" content="#5000e6" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="color-scheme" content="dark light">
+  <title>DOORS: Paradox Building Rules</title>
   <link href="scripts/css/main.css" rel="stylesheet">
 </head>
 <body>
@@ -18,6 +34,8 @@
       </div>
     </div>
   </header>
+
+  <!-- ALL TEXT MUST BE DONE BELOW -->
 
   <div class="layout">
     <nav id="toc">
@@ -33,38 +51,279 @@
         <p class="muted">Under no circumstance should you ignore these rules, if these rules are too difficult to understand for you, you might not be suitable to be a builder for Paradox, this is not being rude, this is enforcing quality.</p>
       </section>
 
-      <section class="rule-section">
+      <section class="rule-section" data-section="Basics">
         <div class="section-head">
           <div>
-            <h2>testing video and image</h2>
-            <div class="small muted">uhhh</div>
+            <h2>Basics</h2>
           </div>
           <a class="anchor small muted" href="#" aria-label="anchor">#</a>
         </div>
         <div class="section-body">
-          <div class="media-grid">
-            <figure>
-              <img
-                src="assets/images/Thing.png"
-                alt="Thing.png reference">
-              <figcaption>thing</figcaption>
-            </figure>
+          <details class="block" open>
+            <summary><h3>Grid & Alignment</h3></summary>
+            <ul>
+              <li><strong>All transforms must be multiples of 0.125 studs.</strong> (…0.125, 0.25, 0.5, 1.0, etc.)</li>
+              <li>Never use free-scale/floating values like <code>0.373</code> unless explicitly called out in the spec for a prop.</li>
+              <li>Pivots anchored to logical <em>center or bottom</em> of assets. Doors: hinge pivot aligned to hinge edge.</li>
+              <li>No face overlaps or “z-fighting”. No micro-nudges “to look right”. Make the geometry right.</li>
+            </ul>
+          </details>
 
-            <figure>
-              <video
-                src="assets/videos/yeah.mp4"
-                controls
-                muted
-                preload="metadata"
-                poster="assets/images/Thing.png">
-              </video>
-              <figcaption>yeah</figcaption>
-            </figure>
+          <details class="block" open>
+            <summary><h3>When “off-grid” is allowed</h3></summary>
+            <ul>
+              <li><strong>Decor only</strong>: subtle rotation or offset of <em>furniture</em> to break repetition.</li>
+              <li>Never for structure (walls, floors, ceilings, trims, pillars, door/window frames).</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <section class="rule-section" data-section="RoomBasics">
+        <div class="section-head">
+          <div>
+            <h2>Room Basics</h2>
           </div>
+          <a class="anchor small muted" href="#" aria-label="anchor">#</a>
+        </div>
+        <div class="section-body">
+          <details class="block" open>
+            <summary><h3>Start & Exit orientation</h3></summary>
+            <ul>
+              <li><strong>Start</strong> part faces <em>into</em> the playable space.</li>
+              <li><strong>Exit</strong> part faces <em>out</em> of the room toward the next connection.</li>
+              <li>Both must be on-grid and flush with door thresholds; no micro gaps.</li>
+            </ul>
+          </details>
+
+          <details class="block" open>
+            <summary><h3>RoomEntity_SpawnNode</h3></summary>
+            <ul>
+              <li><strong>Required in every room.</strong></li>
+              <li>Place <em>in front of Start</em> or roughly <em>center</em> of the room, unobstructed.</li>
+              <li>Keep 2x2x2 studs of clear volume around it; no stuff within that area, think of this as like the nodes personal space.</li>
+            </ul>
+          </details>
+
+          <details class="block" open>
+            <summary><h3>Waypoints</h3></summary>
+            <ul>
+              <li>Create the top-level folder: <code>Waypoints</code>.</li>
+              <li>Only required if <strong>Start and Exit are not line-of-sight</strong>.</li>
+              <li>Inside <code>Waypoints</code>, add <strong>one folder per exit</strong>: <code>1</code>, <code>2</code>, …</li>
+              <li>Drop waypoint parts in order inside each subfolder. Keep them named naturally or numbered.</li>
+            </ul>
+            <pre><code>Room Model
+      └─ Waypoints
+        ├─ 1
+        │   ├─ WP1
+        │   └─ WP2
+        └─ 2
+            └─ WP2</code></pre>
+          </details>
+        </div>
+      </section>
+
+      <section class="rule-section" data-section="Folders">
+        <div class="section-head">
+          <div>
+            <h2>Folders</h2>
+          </div>
+          <a class="anchor small muted" href="#" aria-label="anchor">#</a>
+        </div>
+        <div class="section-body">
+          <details class="block" open>
+            <summary><h3>Required tree</h3></summary>
+            <pre><code>Room Model
+      ├─ Assets          - structure: Walls, Floor, Ceiling, Windows/Frames
+      ├─ Furniture       - anything with a Part named "Primary" inside the model
+      ├─ Lights          - all light sources (bulbs, sconces, strips)
+      ├─ RoomHitbox      - convex/union set that fully contains the room
+      ├─ Scriptables     - gates, triggers, interactions
+      ├─ Waypoints       - path folders (1, 2, ...)
+      ├─ RoomModule      - ModuleScript: enter/exit hooks (remove if unused)
+      ├─ Start           - entry locator (faces in)
+      ├─ Exit            - exit locator (faces out)
+      └─ RoomEntity_SpawnNode</code></pre>
+            <ul>
+              <li><strong>Do not rename</strong> these core folders/objects.</li>
+              <li>Structure inside <code>Assets</code> can be further sub-organized, but keep it sane.</li>
+            </ul>
+          </details>
+
+          <details class="block" open>
+            <summary><h3>Furniture rule</h3></summary>
+            <ul>
+              <li>Any model containing a <code>Part</code> named <code>Primary</code> is classified as <strong>Furniture</strong> and must live in <code>Furniture</code>.</li>
+              <li>Use the Multitool to convert raw models into Furniture models.</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <section class="rule-section" data-section="RoomHitbox">
+        <div class="section-head">
+          <div>
+            <h2>RoomHitbox</h2>
+          </div>
+          <a class="anchor small muted" href="#" aria-label="anchor">#</a>
+        </div>
+        <div class="section-body">
+          <details class="block" open>
+            <summary><h3>Coverage</h3></summary>
+            <ul>
+              <li>Hitbox must <strong>fully contain the entire playable room</strong> including trims that block players.</li>
+              <li>No holes, no leaks, no narrow slivers. Prefer clean boxes/unions over spaghetti.</li>
+              <li>Keep hitbox parts <em>non-collidable</em> and in the <code>RoomHitbox</code> folder only.</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <section class="rule-section" data-section="Lights">
+        <div class="section-head">
+          <div>
+            <h2>Lighting</h2>
+          </div>
+          <a class="anchor small muted" href="#" aria-label="anchor">#</a>
+        </div>
+        <div class="section-body">
+          <details class="block" open>
+            <summary><h3>Placement & Spacing</h3></summary>
+            <ul>
+              <li>Lightbulbs live in <code>Lights</code> folder only. <strong>Do not change the PrimaryPart</strong> of any light prefab.</li>
+              <li>Baseline spacing: <strong>~20 studs</strong> between bulbs; adjust for even coverage and shadows.</li>
+              <li>Vertical: bulbs are <strong>3.5 studs</strong> below ceiling (bottom of bulb → top of wire). Use judgement on tall ceilings.</li>
+            </ul>
+          </details>
+
+          <details class="block" open>
+            <summary><h3>Performance</h3></summary>
+            <ul>
+              <li>Keep shadow-casters to the minimum necessary. Disable shadows on tiny fixtures.</li>
+              <li>Keep per-room light count within budget (document your max once finalized).</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <section class="rule-section" data-section="Pillars">
+        <div class="section-head">
+          <div>
+            <h2>Pillars</h2>
+          </div>
+          <a class="anchor small muted" href="#" aria-label="anchor">#</a>
+        </div>
+        <div class="section-body">
+          <details class="block" open>
+            <summary><h3>Spacing</h3></summary>
+            <ul>
+              <li>Default pillar pitch: <strong>10 studs</strong> (center to center) unless the room’s module specifies otherwise.</li>
+              <li>All pillar bases align to floor grid; caps align with ceiling modules.</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <section class="rule-section" data-section="Transforms">
+        <div class="section-head">
+          <div>
+            <h2>Positions</h2>
+          </div>
+          <a class="anchor small muted" href="#" aria-label="anchor">#</a>
+        </div>
+        <div class="section-body">
+          <details class="block" open>
+            <summary><h3>Snap rules</h3></summary>
+            <ul>
+              <li>Never scale/move/rotate structure freely. Always snap to grid.</li>
+              <li>Decor exceptions: minor rotation/offset only; keep on-grid for bounding/collision.</li>
+            </ul>
+          </details>
+
+          <details class="block" open>
+            <summary><h3>Light prefab edits</h3></summary>
+            <ul>
+              <li>Do not change <code>PrimaryPart</code> of any light prefab.</li>
+              <li>If internal parts are edited (mesh/size), <strong>notify Fancy Ducc or Lighty</strong>.</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <section class="rule-section" data-section="RoomModule">
+        <div class="section-head">
+          <div>
+            <h2>RoomModule</h2>
+          </div>
+          <a class="anchor small muted" href="#" aria-label="anchor">#</a>
+        </div>
+        <div class="section-body">
+          <details class="block" open>
+            <summary><h3>When to include it</h3></summary>
+            <ul>
+              <li>Only if the room needs logic (gates, events, VFX).</li>
+              <li>If unused, <strong>remove</strong> the ModuleScript.</li>
+            </ul>
+          </details>
+          <details class="block" open>
+            <summary><h3>Template code</h3></summary>
+            <pre><code>local RoomModule = {}
+
+local Room = script.Parent
+
+function RoomModule.Start()
+	-- Code Here
+end
+
+return RoomModule</code></pre>
+          </details>
+        </div>
+      </section>
+
+      <section class="rule-section" data-section="QA">
+        <div class="section-head">
+          <div>
+            <h2>Checklist</h2>
+          </div>
+          <a class="anchor small muted" href="#" aria-label="anchor">#</a>
+        </div>
+        <div class="section-body">
+          <ul>
+            <li>✅ All transforms are multiples of 0.125</li>
+            <li>✅ no z-fighting AT ALL (even ones too small to see unless you're looking for it)</li>
+            <li>✅ Start faces <strong>outside</strong> of the room.</li>
+            <li>✅ Exit faces <strong>inside</strong> of the room.</li>
+            <li>✅ SpawnNode present and clear.</li>
+            <li>✅ Waypoints added <em>only</em> when Start↔Exit are not in clear view; foldered by exit number.</li>
+            <li>✅ Folder tree matches spec; lights in <code>Lights</code>, furniture in <code>Furniture</code>.</li>
+            <li>✅ RoomHitbox fully contains room with no leaks, the only parts that should be outside of the hitbox are the Start and Exit parts</li>
+            <li>✅ Lighting spacing roughly 20 studs and light bulbs 3.5 studs below ceiling (or justified).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="rule-section" data-section="Mistakes">
+        <div class="section-head">
+          <div>
+            <h2>Common Mistakes</h2>
+          </div>
+          <a class="anchor small muted" href="#" aria-label="anchor">#</a>
+        </div>
+        <div class="section-body">
+          <ul>
+            <li>❌ Lights/furniture mixed into <code>Assets</code>.</li>
+            <li>❌ Start/Exit backwards, or floating off the threshold.</li>
+            <li>❌ Waypoints created when not needed (clutters nav).</li>
+            <li>❌ Hitbox too small or hugging props (must envelope room).</li>
+            <li>❌ Off-grid trims causing hairline seams and z-fighting.</li>
+          </ul>
         </div>
       </section>
     </main>
   </div>
+
+  <!-- ALL TEXT MUST BE DONE ABOVE -->
 
   <script src="scripts/java/main.js"></script>
 </body>
