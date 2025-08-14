@@ -89,6 +89,41 @@ function toast(msg) {
   setTimeout(() => (toastEl.style.opacity = "0"), 1200)
 }
 
+// DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('pre[class*="language-"]').forEach(pre => {
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.textContent = 'Copy';
+    btn.style.position = 'absolute';
+    btn.style.right = '10px';
+    btn.style.top = '10px';
+    btn.style.padding = '.35rem .6rem';
+    btn.style.fontSize = '.85rem';
+    btn.style.opacity = '.8';
+    btn.addEventListener('mouseenter', () => btn.style.opacity = '1');
+    btn.addEventListener('mouseleave', () => btn.style.opacity = '.8');
+
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'relative';
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(pre);
+    wrapper.appendChild(btn);
+
+    btn.addEventListener('click', async () => {
+      const text = pre.textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 900);
+      } catch {
+        btn.textContent = 'Error';
+        setTimeout(() => btn.textContent = 'Copy', 900);
+      }
+    });
+  });
+});
+
 // Init
 buildTOC()
 spyTOC()

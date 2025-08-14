@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <base href="/" />
+  <base href="/Paradox-Building-Rules">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta property="og:title" content="DOORS: Paradox Building Rules" />
   <meta property="og:description"
@@ -21,13 +21,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="color-scheme" content="dark light">
   <title>DOORS: Paradox Building Rules</title>
+  <link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <script src="https://unpkg.com/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+  <script src="https://unpkg.com/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+  <script>
+    window.Prism = window.Prism || {};
+    Prism.plugins = Prism.plugins || {};
+    Prism.plugins.autoloader = { languages_path: 'https://unpkg.com/prismjs@1.29.0/components/' };
+  </script>
   <link href="scripts/css/main.css" rel="stylesheet">
 </head>
 <body>
   <header>
     <div class="header-inner">
       <div class="brand">
-        <div class="brand-mark" aria-hidden="true"></div>
+        <img class="brand-mark" src="assets/images/ProjectInc.png" alt="Project Inc Logo">
         <div>
           <div>DOORS: Paradox Building Rules</div>
         </div>
@@ -46,7 +54,9 @@
 
     <main id="content" class="grid">
       <section class="hero">
-        <h1><span>Building Standards</span> for DOORS: Paradox</h1>
+        <h1>
+          <span>Building Standards</span> for <span>DOORS: Paradox</span>
+        </h1>
         <p class="muted">Everything here is a requirement. If a build doesn't meet these rules, the room will NOT be added to the game. Keep scale, distance, assets, and hierarchy consistent across all rooms.</p>
         <p class="muted">Under no circumstance should you ignore these rules, if these rules are too difficult to understand for you, you might not be suitable to be a builder for Paradox, this is not being rude, this is enforcing quality.</p>
       </section>
@@ -90,8 +100,8 @@
           <details class="block" open>
             <summary><h3>Start & Exit orientation</h3></summary>
             <ul>
-              <li><strong>Start</strong> part faces <em>into</em> the playable space.</li>
-              <li><strong>Exit</strong> part faces <em>out</em> of the room toward the next connection.</li>
+              <li><strong>Start</strong> part faces <em>outside</em> of the main room.</li>
+              <li><strong>Exit</strong> part faces <em>inside</em> of the main room.</li>
               <li>Both must be on-grid and flush with door thresholds; no micro gaps.</li>
             </ul>
           </details>
@@ -266,14 +276,14 @@
               <li>If unused, <strong>remove</strong> the ModuleScript.</li>
             </ul>
           </details>
-          <details class="block" open>
-            <summary><h3>Template code</h3></summary>
-            <pre><code>local RoomModule = {}
+            <details class="block" open>
+              <summary><h3>Template code</h3></summary>
+              <pre class="language-lua"><code class="language-lua">local RoomModule = {}
 
-local Room = script.Parent
+local Room : Instance = script.Parent
 
 function RoomModule.Start()
-	-- Code Here
+    -- Code Here
 end
 
 return RoomModule</code></pre>
@@ -314,8 +324,7 @@ return RoomModule</code></pre>
           <ul>
             <li>❌ Lights/furniture mixed into <code>Assets</code>.</li>
             <li>❌ Start/Exit backwards, or floating off the threshold.</li>
-            <li>❌ Waypoints created when not needed (clutters nav).</li>
-            <li>❌ Hitbox too small or hugging props (must envelope room).</li>
+            <li>❌ Hitbox too small.</li>
             <li>❌ Off-grid trims causing hairline seams and z-fighting.</li>
           </ul>
         </div>
@@ -325,6 +334,8 @@ return RoomModule</code></pre>
 
   <!-- ALL TEXT MUST BE DONE ABOVE -->
 
+  <link href="scripts/css/anim.css" rel="stylesheet">
+  <script src="scripts/java/anim.js" defer></script>
   <script src="scripts/java/main.js"></script>
 </body>
 </html>
