@@ -124,6 +124,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// CLICK
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-grid-toggle]');
+  if (!btn) return;
+  const fig = btn.closest('.spec-figure');
+  if (!fig) return;
+  fig.setAttribute('data-grid-on', fig.getAttribute('data-grid-on') === '1' ? '0' : '1');
+});
+
 // Init
 buildTOC()
 spyTOC()

@@ -400,6 +400,11 @@ pre[data-filename]::before {
     background: color-mix(in srgb, var(--surface-2) 80%, #3a2f06);
 }
 
+.badge-dont {
+    border-color: rgba(255, 0, 0, 0.5);
+    background: color-mix(in srgb, var(--surface-2) 80%, #3a0606);
+}
+
 .steps {
     counter-reset: step;
     padding-left: 0;
@@ -574,6 +579,26 @@ pre[data-filename]::before {
     margin: 0.6rem 0;
 }
 
+.spec-figure { position: relative; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #0f1320; }
+.spec-figure > img { display:block; width:100%; height:auto; }
+.spec-figure .spec-overlay{
+  position:absolute; inset:0; pointer-events:none; opacity:.0;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0, rgba(255,255,255,.06) 1px, transparent 1px, transparent 16px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0, rgba(255,255,255,.06) 1px, transparent 1px, transparent 16px);
+  transition: opacity 160ms cubic-bezier(.22,.61,.36,1);
+}
+.spec-figure[data-grid-on="1"] .spec-overlay{ opacity:.9; }
+
+.grid-toggle{
+  position:absolute; top:8px; left:8px;
+  background: rgba(255,255,255,.06); color: var(--text);
+  border: 1px solid rgba(255,255,255,.14); border-radius: 8px;
+  padding: .25rem .55rem; font-size: .8rem; cursor: pointer;
+  backdrop-filter: blur(4px); transition: border-color .15s ease, background .15s ease;
+}
+.grid-toggle:hover{ background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); }
+
 figure {
     margin: 0;
     border: 1px solid var(--border);
@@ -618,6 +643,27 @@ thead th {
 tbody tr:hover {
     background: rgba(255, 255, 255, 0.03);
 }
+
+.rule-sub{ margin: .75rem 0 .35rem; }
+.chips{ display:flex; flex-wrap:wrap; gap:.4rem; padding:0; margin:.25rem 0 .75rem; list-style:none; }
+.chips li{
+  padding:.3rem .55rem; border-radius:.5rem;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+  font-weight:600; font-size:.9rem;
+}
+.lights-figure{ margin:.5rem 0 1.25rem; display:flex; justify-content:center; }
+.lights-figure img{ max-width:100%; height:auto; border-radius:12px; }
+
+.lights-filter{ display:flex; align-items:center; gap:.4rem; margin:.5rem 0 .6rem; }
+.lights-filter button{
+  padding:.3rem .6rem; border:1px solid rgba(255,255,255,.18); border-radius:.5rem; background:rgba(255,255,255,.06);
+}
+.lights-filter button.on{ outline:2px solid #5000e6; }
+
+.lights-matrix{ width:100%; border-collapse:collapse; font-size:.95rem; }
+.lights-matrix th, .lights-matrix td{ border:1px solid rgba(255,255,255,.18); padding:.45rem .55rem; text-align:center; }
+.lights-matrix th:first-child, .lights-matrix td:first-child{ text-align:left; white-space:nowrap; }
+.lights-matrix td{ min-width:3.2rem; }
 
 .callout {
     display: flex;

@@ -1,0 +1,81 @@
+/* ——— Lightbox overlay ——— */
+.pi-lightbox{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(7,10,16,.78);
+  backdrop-filter: blur(2px) saturate(110%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 220ms cubic-bezier(.22,.61,.36,1),
+              visibility 220ms step-end;
+}
+.pi-lightbox.is-open{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 220ms cubic-bezier(.22,.61,.36,1),
+              visibility 0ms step-start;
+}
+
+.pi-lightbox__frame{
+  position: relative;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--accent-gradient);
+  transform: scale(.975);
+  opacity: 0;
+  transition: transform 240ms cubic-bezier(.22,.61,.36,1),
+              opacity 240ms cubic-bezier(.22,.61,.36,1);
+}
+.pi-lightbox.is-open .pi-lightbox__frame{
+  transform: scale(1);
+  opacity: 1;
+}
+
+.pi-lightbox.is-closing{ opacity: 0; }
+.pi-lightbox.is-closing .pi-lightbox__frame{
+  transform: scale(.965);
+  opacity: 0;
+}
+
+.pi-lightbox__img{
+  display: block;
+  max-width: min(96vw, 1600px);
+  max-height: 90vh;
+  border-radius: 12px;
+  background: #0b0d13;
+  box-shadow: 0 20px 60px rgba(0,0,0,.55);
+}
+
+.pi-lightbox, .pi-lightbox *{ cursor: zoom-out; }
+
+.pi-lens{
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--accent-gradient);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(.92);
+  transition: opacity 120ms cubic-bezier(.22,.61,.36,1),
+              transform 120ms cubic-bezier(.22,.61,.36,1);
+}
+.pi-lens__inner{
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #0b0d13;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 100% 100%;
+}
+.pi-lens.is-on{ opacity: 1; transform: scale(1); }
+
+img[data-nolightbox]{ cursor: default; }
