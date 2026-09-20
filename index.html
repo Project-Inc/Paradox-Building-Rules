@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta charset="utf-8" />
   <meta property="og:title" content="DOORS: Paradox Building Rules" />
   <meta property="og:description"
     content="Here is where you can see all of the Project-Inc DOORS: Paradox Building Rules" />
@@ -16,9 +16,9 @@
   <meta name="twitter:image" src="./assets/images/ProjectInc.png" />
   <meta name="robots" content="index,follow" />
   <meta name="googlebot" content="index,follow" />
-  <meta name="theme-color" content="#75ff6e" />
+  <meta name="theme-color" content="#151817" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="color-scheme" content="dark light">
+  <meta name="color-scheme" content="dark">
   <title>DOORS: Paradox Building Rules</title>
   <link rel="icon" href="./assets/images/ProjectInc.png" />
   <link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css">
@@ -34,33 +34,29 @@
   <script src="./scripts/java/lightbox.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to content</a>
   <header>
     <div class="header-inner">
-      <div class="brand">
-        <img class="brand-mark" src="./assets/images/ProjectInc.png" alt="Project Inc Logo">
-        <div>
-          <div>DOORS: Paradox Building Rules</div>
-        </div>
-      </div>
+      <a class="brand" href="./index.html" aria-label="DOORS: Paradox home">
+        <img class="brand-mark" src="./assets/images/ProjectInc.png" alt="" width="28" height="28">
+        <span>DOORS: Paradox</span>
+      </a>
     </div>
   </header>
 
   <!-- ALL TEXT MUST BE DONE BELOW -->
 
   <div class="layout">
-    <nav id="toc">
-      <h3>Contents</h3>
-      <input class="search" id="tocSearch" placeholder="filter sections…">
+    <nav id="toc" aria-label="Page contents">
+      <label class="sr-only" for="tocSearch">Search sections</label>
+      <input class="search" type="search" id="tocSearch" placeholder="Search sections…" autocomplete="off" aria-controls="content tocList">
       <ul id="tocList"></ul>
     </nav>
 
-    <main id="content" class="grid">
+    <main id="content" class="grid" tabindex="-1">
       <section class="hero">
-        <h1>
-          <span>Building Standards</span> for <span>DOORS: Paradox</span>
-        </h1>
-        <p class="muted">Everything here is a requirement. If a build doesn't meet these rules, the room will NOT be added to the game. Keep scale, distance, assets, and hierarchy consistent across all rooms.</p>
-        <p class="muted">Under no circumstance should you ignore these rules, if these rules are too difficult to understand for you, you might not be suitable to be a builder for Paradox, this is not being rude, this is enforcing quality.</p>
+        <h1>Building standards</h1>
+        <p class="hero-note">Follow all the rules below. Your room needs to meet them before it can be added to the game.</p>
       </section>
 
       <section class="rule-section" data-section="Basics">
@@ -75,17 +71,17 @@
             <summary><h3>Grid & Alignment</h3></summary>
             <ul>
               <li><strong>All positions and scales must be multiples of 0.125 studs.</strong> (…0.125, 0.25, 0.5, 1.0, etc.)</li>
-              <li>Never use free-scale/floating values like <code>0.373</code> unless explicitly called out in the spec for a prop.</li>
-              <li>Pivots anchored to logical <em>center or bottom</em> of assets.</li>
-              <li>No z-fighting and no micro-nudges to look right to the eye. Make the geometry right, it'll all work out at the end.</li>
+              <li>Don’t use off-grid values like <code>0.373</code> unless the prop’s instructions specifically allow it.</li>
+              <li>Place pivots at the <em>center or bottom</em> of assets, wherever makes sense for the asset.</li>
+              <li>Avoid z-fighting. Fix the geometry instead of nudging parts until they look right.</li>
             </ul>
           </details>
 
           <details class="block" open>
             <summary><h3>When “off-grid” is allowed</h3></summary>
             <ul>
-              <li><strong>Decor only</strong>: subtle rotation or offset of <em>furniture</em> to break repetition.</li>
-              <li>Never for structure (walls, floors, ceilings, trims, pillars, door/window frames).</li>
+              <li><strong>Decor only:</strong> you can slightly rotate or offset <em>furniture</em> to make a room feel less repetitive.</li>
+              <li>Keep all structure on-grid: walls, floors, ceilings, trims, pillars, and door/window frames.</li>
             </ul>
           </details>
         </div>
@@ -104,7 +100,7 @@
             <ul>
               <li><strong>Start</strong> part faces <em>outside</em> of the main room.</li>
               <li><strong>Exit</strong> part faces <em>inside</em> of the main room.</li>
-              <li>Both must be on-grid and flush with door thresholds; no micro gaps.</li>
+              <li>Keep both on-grid and flush with the door thresholds, with no small gaps.</li>
             </ul>
           </details>
 
@@ -112,18 +108,18 @@
             <summary><h3>RoomEntity_SpawnNode</h3></summary>
             <ul>
               <li><strong>Required in every room.</strong></li>
-              <li>Place <em>in front of Start</em> or roughly <em>center</em> of the room, unobstructed.</li>
-              <li>Keep 2x2x2 studs of clear volume around it; no stuff within that area, think of this as like the nodes personal space.</li>
+              <li>Place it <em>in front of Start</em> or near the <em>center</em> of the room, with nothing blocking it.</li>
+              <li>Leave a clear 2x2x2-stud space around it. Keep other parts out of that space.</li>
             </ul>
           </details>
 
           <details class="block" open>
             <summary><h3>Waypoints</h3></summary>
             <ul>
-              <li>Create the top-level folder: <code>Waypoints</code>.</li>
-              <li>Only required if <strong>Start and Exit are not line-of-sight</strong>.</li>
+              <li>Add a folder named <code>Waypoints</code> directly inside the room model.</li>
+              <li>You only need waypoints if <strong>there’s no clear line of sight between Start and Exit</strong>.</li>
               <li>Inside <code>Waypoints</code>, add <strong>one folder per exit</strong>: <code>1</code>, <code>2</code>, …</li>
-              <li>Drop waypoint parts in order inside each subfolder. Keep them named naturally or numbered.</li>
+              <li>Put waypoint parts in order inside each subfolder. Use clear names or numbers.</li>
             </ul>
             <pre><code>Room Model
       └─ Waypoints
@@ -138,8 +134,9 @@
             <summary><h3>Full Video Example</h3></summary>
             <figure>
               <video src="./assets/videos/Building Simple Room.mp4" controls muted preload="metadata"></video>
-              <figcaption>Full video example of me making a simple room with a floor plan, walls and pillars included.</figcaption>
+              <figcaption>A full example of building a simple room, including the floor plan, walls, and pillars.</figcaption>
             </figure>
+          </details>
         </div>
       </section>
 
@@ -152,7 +149,7 @@
         </div>
         <div class="section-body">
           <details class="block" open>
-            <summary><h3>Required tree</h3></summary>
+            <summary><h3>Folder setup</h3></summary>
             <pre><code>Room Model
       ├─ Assets          - structure: Walls, Floor, Ceiling, Windows/Frames
       ├─ Furniture       - anything with a Part named "Primary" inside the model
@@ -165,16 +162,16 @@
       ├─ Exit            - exit locator (faces out)
       └─ RoomEntity_SpawnNode</code></pre>
             <ul>
-              <li><strong>Do not rename</strong> these core folders/objects.</li>
-              <li>Structure inside <code>Assets</code> can be further sub-organized, but keep it sane.</li>
+              <li><strong>Don’t rename</strong> these folders or objects.</li>
+              <li>You can add subfolders inside <code>Assets</code>. Keep them simple and easy to follow.</li>
             </ul>
           </details>
 
           <details class="block" open>
             <summary><h3>Furniture rule</h3></summary>
             <ul>
-              <li>Any model containing a <code>Part</code> named <code>Primary</code> is classified as <strong>Furniture</strong> and must live in <code>Furniture</code>.</li>
-              <li>Use the Multitool to convert raw models into Furniture models.</li>
+              <li>Any model with a <code>Part</code> named <code>Primary</code> counts as <strong>Furniture</strong>. Put it in the <code>Furniture</code> folder.</li>
+              <li>Use the Multitool to turn regular models into Furniture models.</li>
             </ul>
           </details>
         </div>
@@ -184,7 +181,7 @@
       <div class="section-head">
         <div>
           <h2>Lighting</h2>
-          <div class="small muted">Drag & drop prefabs; place where they look best, but follow the guardrails.</div>
+          <div class="small muted">Place light prefabs where they look best, while following these rules.</div>
         </div>
         <a class="anchor small muted" href="#" aria-label="anchor">#</a>
       </div>
@@ -192,10 +189,10 @@
       <div class="section-body">
 
         <details class="block" open>
-          <summary><h3>Non-negotiables</h3></summary>
+          <summary><h3>What you can change</h3></summary>
           <ul>
-            <li><strong>Do not change light colors or any internal parts/materials/names.</strong> The lights are replaced at runtime, edits will break lighting systems and make the room look wrong in game</li>
-            <li>Allowed edits: <strong>position</strong>, <strong>rotation</strong>, <strong>duplication</strong>. <em>Not</em> allowed: scale, recolor, re-mesh, re-parent, PrimaryPart changes.</li>
+            <li><strong>Don’t change light colors or any internal parts, materials, or names.</strong> The game replaces these lights when it runs. Changing them will break the lighting and make the room look wrong.</li>
+            <li>You can <strong>move</strong>, <strong>rotate</strong>, and <strong>duplicate</strong> lights. Don’t scale, recolor, re-mesh, or re-parent them, or change their PrimaryPart.</li>
             <li>All light models live in the room's <code>Lights</code> folder.</li>
           </ul>
         </details>
@@ -203,10 +200,10 @@
         <details class="block" open>
           <summary><h3>General placement</h3></summary>
           <ul>
-            <li>Baseline spacing between light bulbs is <strong>20 studs</strong>. You can choose whatever looks best.</li>
-            <li><code>LightBulb (main)</code> / <code>RoofLight</code>: typically <strong>3.5 studs below</strong> the finished ceiling.</li>
-            <li>Wall lights (<code>WallLight</code>, <code>MetalWallLight</code>, lanterns): centered on panels/pillars; keep tops level down a corridor.</li>
-            <li>Other lights (<code>HugeLight</code>, <code>TowerLight</code>, <code>Floodlight_Stand</code>): use as accents/fills; avoid over-crowding.</li>
+            <li>Start with <strong>20 studs</strong> between light bulbs, then adjust the spacing to suit the room.</li>
+            <li>Place <code>LightBulb (main)</code> / <code>RoofLight</code> about <strong>3.5 studs below</strong> the finished ceiling.</li>
+            <li>Center wall lights (<code>WallLight</code>, <code>MetalWallLight</code>, lanterns) on panels or pillars. Keep their tops level along a corridor.</li>
+            <li>Use other lights (<code>HugeLight</code>, <code>TowerLight</code>, <code>Floodlight_Stand</code>) to highlight areas or fill darker spots. Don’t crowd them together.</li>
           </ul>
         </details>
 
@@ -336,7 +333,7 @@
             </table>
           </div>
 
-          <p class="muted small">If it looks great but isn't listed for an area, ask first, cause I can add the light to the light types.</p>
+          <p class="muted small">If a light suits an area but isn’t listed for it, ask first. I can add it to the allowed light types.</p>
         </details>
 
       </div>
@@ -346,7 +343,7 @@
         <div class="section-head">
           <div>
             <h2>Walls</h2>
-            <div class="small muted">Template use, symmetry, heights, and bounds.</div>
+            <div class="small muted">Using templates, matching wall widths, and getting the height right.</div>
           </div>
           <a class="anchor small muted" href="#" aria-label="anchor">#</a>
         </div>
@@ -362,11 +359,11 @@
                 <h4>Do</h4>
                 <ul>
                   <li>Build floor plans in <strong>10-stud steps</strong> (10, 20, 30, and so on).</li>
-                  <li>Think in 10x10 “cells” and combine whole cells for the room size.</li>
+                  <li>Build the room from whole 10x10 cells.</li>
                 </ul>
                 <figure class="spec-figure" style="margin-top:.6rem">
                   <img src="./assets/images/FloorPlanExample.png" alt="Good: 10-stud floor plan">
-                  <figcaption>I made the pillars, walls, and floors all in 10 stud increments, while placing pillars, walls, and the floor, I did not lower my stud-increment to lower than 1 stud.</figcaption>
+                  <figcaption>Here, the pillars, walls, and floors use 10-stud increments. I kept snapping at 1 stud or higher while placing them.</figcaption>
                 </figure>
               </div>
 
@@ -374,12 +371,12 @@
               <div class="guide" data-type="dont">
                 <h4>Don't</h4>
                 <ul>
-                  <li>Use sizes like <strong>42</strong> or <strong>100</strong> studs, they break pillar and wall spacing.</li>
-                  <li>Eyeball the plan without snapping to the 10-stud rhythm.</li>
+                  <li>Use sizes like <strong>42</strong> or <strong>100</strong> studs. They break the pillar and wall spacing.</li>
+                  <li>Guess the size instead of snapping to 10-stud steps.</li>
                 </ul>
                 <figure class="spec-figure" style="margin-top:.6rem">
                   <img src="./assets/images/BadFloorPlan.png" alt="Bad: non-15 floor plan">
-                  <figcaption>Bad: 85x72.874, will not match the pillar, wall, or floor. Ultimately making building HARDER for you.</figcaption>
+                  <figcaption>This 85x72.874 floor plan won’t line up with the pillars, walls, or floor pieces, which makes building harder.</figcaption>
                 </figure>
               </div>
             </div>
@@ -388,7 +385,7 @@
           <details class="block" open>
             <summary><h3>Centered entrances: equal left/right walls</h3></summary>
             <ul>
-              <li>If an Entrance/Exit inset sits in the middle of a longer wall, the wall segments to the left and right of it must be the <strong>same width</strong>.</li>
+              <li>When an Entrance/Exit inset is centered on a longer wall, keep the wall sections on either side the <strong>same width</strong>.</li>
               <li>Example: if the right segment to the next corner/wall break is <code>10</code> studs, the left segment must also be <code>10</code> studs.</li>
             </ul>
 
@@ -401,7 +398,7 @@
           <details class="block" open>
             <summary><h3>Floors</h3></summary>
             <ul>
-              <li>Every single floor in every room when using the default height for each room should be 13.75 studs tall, past that a new floor should be made unless otherwise, no floor to ceiling height should be lower than 13.75 studs</li>
+              <li>Use 13.75 studs as the default floor-to-ceiling height. Beyond that, add another floor unless there’s an exception. Never make the floor-to-ceiling height less than 13.75 studs.</li>
             </ul>
 
             <figure class="spec-figure">
@@ -414,22 +411,22 @@
           <details class="block" open>
             <summary><h3>Taller walls</h3></summary>
             <ul>
-              <li>To make walls taller, <strong>only scale the main wall panel upward</strong> (Y). Do <em>not</em> duplicate the baseboard.</li>
-              <li><strong>Two-floor rooms only:</strong> if there are two distinct floors, each floor has its own baseboard at that floor’s height and it runs around the whole room.</li>
+              <li>For taller walls, <strong>scale only the main wall panel upward</strong> (Y). Don’t duplicate the baseboard.</li>
+              <li><strong>Two-floor rooms only:</strong> give each floor its own baseboard at that floor’s height, running around the whole room.</li>
             </ul>
 
             <figure class="spec-figure">
               <img src="./assets/images/DoubleFloorExample.png">
               <div class="spec-overlay"></div>
-              <figcaption>Two floors: baseboard per floor, wraps fully.</figcaption>
+              <figcaption>Each floor gets a baseboard that runs all the way around.</figcaption>
             </figure>
           </details>
 
           <details class="block" open>
             <summary><h3>Meet the floor exactly</h3></summary>
             <ul>
-              <li><strong>Walls must sit exactly on the floor bounds.</strong> No floor sticking out under/around the wall.</li>
-              <li>One big floor part is okay for multi-room sets, but still keep walls aligned to its exact edges.</li>
+              <li><strong>Line walls up exactly with the floor’s edges.</strong> Don’t leave floor sticking out beyond the walls.</li>
+              <li>You can use one large floor part for a set of rooms. Keep the walls lined up with its edges.</li>
             </ul>
           </details>
 
@@ -441,7 +438,7 @@
         <div class="section-head">
           <div>
             <h2>Pillars</h2>
-            <div class="small muted">Standard offsets from walls and corners.</div>
+            <div class="small muted">How far to place pillars from walls and corners.</div>
           </div>
           <a class="anchor small muted" href="#" aria-label="anchor">#</a>
         </div>
@@ -451,8 +448,8 @@
           <details class="block" open>
             <summary><h3>Spacing</h3></summary>
             <ul>
-              <li><strong>Every pillar sits exactly <code>10</code> studs away from eachother, pillars are spaced 10 studs away from other pillars.</strong> Not closer, not farther.</li>
-              <li>This goes for all pillars, if the last pillar of the room is following the 10 studs away, but is not exactly meeting the corner of the room properly, then you are <strong>NOT</strong> making the room correct, and you will need to change the floor and walls.</li>
+              <li><strong>Keep exactly <code>10</code> studs between pillars.</strong> Don’t move them closer together or farther apart.</li>
+              <li>This applies to every pillar. If the last one follows the 10-stud spacing but doesn’t line up with the corner, <strong>adjust the floor and walls</strong> to make it fit.</li>
             </ul>
 
             <figure class="spec-figure">
@@ -464,7 +461,7 @@
           <details class="block" open>
             <summary><h3>Offset from a straight wall</h3></summary>
             <ul>
-              <li><strong>Every pillar sits exactly <code>0.375</code> studs away from the wall.</strong> Not closer, not farther, unless it's a corner.</li>
+              <li><strong>Place each pillar exactly <code>0.375</code> studs from the wall.</strong> Corners use the separate rule below.</li>
               <li>Measure from the pillar's closest face to the wall's face.</li>
             </ul>
 
@@ -477,7 +474,7 @@
           <details class="block" open>
             <summary><h3>Pillars in corners</h3></summary>
             <ul>
-              <li><strong>Corner pillars are 1.375 studs away from each wall</strong> (X and Z). Or directly up against the wall, the base pillar part should be touching the wall, not the trims on the bottom or top of the pillar.</li>
+              <li><strong>Place corner pillars 1.375 studs from each wall</strong> (X and Z), or directly against the walls. If they touch the walls, use the main pillar part as the contact point, not the top or bottom trim.</li>
             </ul>
 
             <figure class="spec-figure">
@@ -492,7 +489,7 @@
         <div class="section-head">
           <div>
             <h2>Ceiling Pillars</h2>
-            <div class="small muted">The darker ceiling ribs that branch across the vault.</div>
+            <div class="small muted">The darker ribs that run across the ceiling.</div>
           </div>
           <a class="anchor small muted" href="#" aria-label="anchor">#</a>
         </div>
@@ -501,19 +498,19 @@
           <details class="block" open>
             <summary><h3>Rules</h3></summary>
             <ul>
-              <li><strong>Ceiling pillars are centered and grid-aligned to wall pillars.</strong> If wall pillars are at 10-stud rhythm, ceiling pillars follow the same 10-stud rhythm.</li>
-              <li>Each ceiling pillar centerline <strong>lines up with the wall pillar centerline</strong></li>
-              <li>Ceiling pillars must be continuous, <strong>no half ceiling pillars</strong> that stop in open space. Always end the pillar into a wall or another ceiling pillar.</li>
-              <li>Lights hang on the ceiling pillars themselves and never inside the pillars volume or on normal ceiling.</li>
+              <li><strong>Center ceiling pillars on the wall pillars and keep them on-grid.</strong> If the wall pillars are spaced every 10 studs, use the same spacing for the ceiling pillars.</li>
+              <li>The center of each ceiling pillar <strong>must line up with the center of the wall pillar</strong>.</li>
+              <li>Run ceiling pillars all the way to a wall or another ceiling pillar. <strong>Don’t leave half pillars</strong> ending in open space.</li>
+              <li>Hang lights on the ceiling pillars, never inside them or on the plain ceiling.</li>
             </ul>
           </details>
 
           <details class="block" open>
             <summary><h3>Small rooms</h3></summary>
             <ul>
-              <li>Run ribs perpendicular to the long span, repeating every <strong>10 studs</strong>.</li>
-              <li>Each rib starts from a wall pillar centerline and crosses to the opposite wall pillar centerline.</li>
-              <li>Keep rib spacing and width consistent from one bay to the next for an even vault pattern.</li>
+              <li>Run ribs across the room at a right angle to its longer side, spaced every <strong>10 studs</strong>.</li>
+              <li>Run each rib from the center of one wall pillar to the center of the opposite wall pillar.</li>
+              <li>Keep the same rib spacing and width across the room so the ceiling pattern stays even.</li>
             </ul>
             <figure class="spec-figure">
               <img src="./assets/images/CeilingRimsSmallRoom.png" alt="Ceiling pillars in small rooms, straight runs aligned to wall pillars">
@@ -524,13 +521,13 @@
           <details class="block" open>
             <summary><h3>Turns / L-shapes</h3></summary>
             <ul>
-              <li>Carry the same <strong>10-stud rhythm</strong> through bends. The main spine type rib follows the room's centerline; cross-ribs branch off to meet the outer/inner walls.</li>
-              <li>Transitions are smooth arcs, <em>no sharp kinks</em>, and still land on pillar centerlines at the walls.</li>
-              <li>Do not compress spacing at the inside of the turn. Keep the bay count and spacing consistent around the curve.</li>
+              <li>Keep the same <strong>10-stud spacing</strong> around bends. Run the main rib along the center of the room, with ribs branching out to the inner and outer walls.</li>
+              <li>Use smooth curves with <em>no sharp kinks</em>. Keep the ends lined up with the centers of the wall pillars.</li>
+              <li>Don’t squeeze the ribs together on the inside of a turn. Keep the same number of spaces and even spacing around the curve.</li>
             </ul>
             <figure class="spec-figure">
               <img src="./assets/images/CeilingRimsTurn.png" alt="Ceiling pillars through a turn">
-              <figcaption>Turns: ribs arc through the bend and still hit pillar centerlines on both sides.</figcaption>
+              <figcaption>Curve the ribs around the turn, keeping them lined up with wall pillars on both sides.</figcaption>
             </figure>
           </details>
         </div>
@@ -541,14 +538,14 @@
         <div class="section-head">
           <div>
             <h2>Ceiling</h2>
-            <div class="small muted">Outside band and roof topper dimensions.</div>
+            <div class="small muted">Sizes for the outside band and roof topper.</div>
           </div>
           <a class="anchor small muted" href="#" aria-label="anchor">#</a>
         </div>
 
         <div class="section-body">
           <details class="block" open>
-            <summary><h3>Heights & Makeup</h3></summary>
+            <summary><h3>Heights & parts</h3></summary>
             <ul>
               <li><strong>Outside ceiling wall/band:</strong> <code>2.875</code> studs</li>
               <li><strong>Ceiling roof “topper”:</strong> <code>0.875</code> studs</li>
@@ -563,9 +560,9 @@
           <details class="block" open>
             <summary><h3>Alignment</h3></summary>
             <ul>
-              <li>The ceiling perimeter band wraps the whole room and <strong>meets the walls cleanly</strong>—no gaps or overhangs.</li>
-              <li>Rib locations are driven by the pillar grid: <strong>every 10 studs</strong>, center-to-center, directly above the wall pillar centers.</li>
-              <li>Maintain the same material set and do not alter heights—if you need a special case, ask first.</li>
+              <li>Run the ceiling band around the whole room. It must <strong>meet the walls cleanly</strong>, with no gaps or overhangs.</li>
+              <li>Place ribs <strong>every 10 studs</strong>, measured center-to-center, directly above the centers of the wall pillars.</li>
+              <li>Keep the same materials and heights. If you need an exception, ask first.</li>
             </ul>
           </details>
         </div>
@@ -582,8 +579,8 @@
           <details class="block" open>
             <summary><h3>When to include it</h3></summary>
             <ul>
-              <li>Only if the room needs logic (gates, events, VFX).</li>
-              <li>If unused, <strong>remove</strong> the ModuleScript.</li>
+              <li>Include it only if the room needs logic, such as gates, events, or VFX.</li>
+              <li>If you’re not using it, <strong>remove</strong> the ModuleScript.</li>
             </ul>
           </details>
             <details class="block" open>
@@ -601,13 +598,12 @@ return RoomModule
           </details>
         </div>
       </section>
+      <p id="searchEmpty" class="empty-state" hidden>No matching sections. Try a different search.</p>
     </main>
   </div>
 
   <!-- ALL TEXT MUST BE DONE ABOVE -->
 
-  <link href="./scripts/css/anim.css" rel="stylesheet">
-  <script src="./scripts/java/anim.js" defer></script>
   <script src="./scripts/java/main.js"></script>
 </body>
 </html>

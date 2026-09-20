@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Paradox UI Kitchen Sink</title>
 
   <link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css">
@@ -11,34 +10,36 @@
   <script>window.Prism=window.Prism||{};Prism.plugins=Prism.plugins||{};Prism.plugins.autoloader={languages_path:'https://unpkg.com/prismjs@1.29.0/components/'};</script>
 
   <link href="./scripts/css/main.css" rel="stylesheet">
-  <link href="./scripts/css/anim.css" rel="stylesheet">
+  <link href="./scripts/css/lightbox.css" rel="stylesheet">
+  <script src="./scripts/java/lightbox.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to content</a>
   <header>
     <div class="header-inner">
-      <div class="brand">
-        <img class="brand-mark" src="./assets/images/ProjectInc.png" alt="Project Inc Logo">
-        <div>Paradox: Components & Patterns</div>
-      </div>
+      <a class="brand" href="./index.html" aria-label="Paradox home">
+        <img class="brand-mark" src="./assets/images/ProjectInc.png" alt="" width="28" height="28">
+        <span>Paradox</span>
+      </a>
+      <span class="header-label">UI reference</span>
     </div>
   </header>
 
   <div class="layout">
-    <nav id="toc">
-      <h3>Contents</h3>
-      <input class="search" id="tocSearch" placeholder="filter sections…">
+    <nav id="toc" aria-label="Page contents">
+      <label class="sr-only" for="tocSearch">Search sections</label>
+      <input class="search" type="search" id="tocSearch" placeholder="Search sections…" autocomplete="off" aria-controls="content tocList">
       <ul id="tocList"></ul>
     </nav>
 
-    <main id="content" class="grid">
+    <main id="content" class="grid" tabindex="-1">
 
-      <!-- HERO -------------------------------------------------------------->
       <section class="hero">
-        <h1><span>Kitchen Sink</span> for <span>DOORS: Paradox</span></h1>
-        <p class="muted">Copy/paste any section below, swap the text, done. These are all compatible with the styles and animations you already have.</p>
+        <p class="eyebrow">Design reference</p>
+        <h1>Components & patterns</h1>
+        <p class="muted">Layouts you can reuse. Copy a section and change the text to fit.</p>
       </section>
 
-      <!-- BASIC RULE SECTION ------------------------------------------------->
       <section class="rule-section" data-section="Simple Section">
         <div class="section-head">
           <div><h2>Simple Section</h2><div class="small muted">Plain text, lists, links.</div></div>
@@ -48,13 +49,12 @@
           <p>Keep structure on-grid. See <a href="#media">Media examples</a> for images & video.</p>
           <ul>
             <li>Stick to 0.125 stud increments.</li>
-            <li>No z-fighting. No hidden junk parts.</li>
+            <li>No z-fighting. No leftover parts hidden away.</li>
           </ul>
-          <div class="callout"><div>ℹ️</div><div><strong>Note:</strong> Everything here is a requirement, not a suggestion.</div></div>
+          <div class="callout"><div>ℹ️</div><div><strong>Note:</strong> All of these rules need to be followed.</div></div>
         </div>
       </section>
 
-      <!-- DETAILS / ACCORDION ----------------------------------------------->
       <section class="rule-section" data-section="Accordions">
         <div class="section-head">
           <div><h2>Accordions</h2><div class="small muted">Use <code>&lt;details class="block"&gt;</code>.</div></div>
@@ -63,7 +63,7 @@
         <div class="section-body">
           <details class="block" open>
             <summary><h3>Grid & Alignment</h3></summary>
-            <p>All geometry must snap to the 0.125 grid. Pivots centered or bottom-aligned.</p>
+            <p>Keep all geometry on the 0.125 grid. Place pivots at the center or bottom.</p>
           </details>
           <details class="block">
             <summary><h3>Naming</h3></summary>
@@ -72,10 +72,9 @@
         </div>
       </section>
 
-      <!-- DO / DON'T GUIDE CARDS -------------------------------------------->
       <section class="rule-section" data-section="Guides">
         <div class="section-head">
-          <div><h2>Do / Don’t</h2><div class="small muted">Paired guidance cards.</div></div>
+          <div><h2>Do / Don’t</h2><div class="small muted">Show what to do and what to avoid side by side.</div></div>
           <a class="anchor small muted" href="#" aria-label="anchor">#</a>
         </div>
         <div class="section-body">
@@ -92,7 +91,6 @@
         </div>
       </section>
 
-      <!-- MEDIA GRID --------------------------------------------------------->
       <section class="rule-section" id="media" data-section="Media">
         <div class="section-head">
           <div><h2>Media</h2><div class="small muted">Images + videos with captions.</div></div>
@@ -105,14 +103,13 @@
               <figcaption>Image: good trim alignment.</figcaption>
             </figure>
             <figure>
-              <video src="./assets/videos/yeah.mp4" controls muted preload="metadata" poster="./assets/images/Thing.png"></video>
-              <figcaption>Video: snapping workflow.</figcaption>
+              <video src="./assets/videos/Building Simple Room.mp4" controls muted preload="metadata" poster="./assets/images/Thing.png"></video>
+              <figcaption>Video: building with snapping.</figcaption>
             </figure>
           </div>
         </div>
       </section>
 
-      <!-- TABLE -------------------------------------------------------------->
       <section class="rule-section" data-section="Table">
         <div class="section-head">
           <div><h2>Table</h2><div class="small muted">Naming & prefixes.</div></div>
@@ -137,12 +134,11 @@
         </div>
         <div class="section-body">
           <figure class="spec-figure">
-            <img src="./assets/images/_todo-example.png">
+            <img src="./assets/images/FloorPlanExample.png" alt="Floor plan aligned to the building grid">
           </figure>
         </div>
       </section>
 
-      <!-- CODE BLOCKS (with filename) --------------------------------------->
       <section class="rule-section" data-section="Code">
         <div class="section-head">
           <div><h2>Code Blocks</h2><div class="small muted">Prism + copy button. Add <code>data-filename</code> if you want a label.</div></div>
@@ -168,23 +164,21 @@ return RoomModule</code></pre>
         </div>
       </section>
 
-      <!-- CHECKLIST ---------------------------------------------------------->
       <section class="rule-section" data-section="Checklist">
         <div class="section-head">
-          <div><h2>Checklist</h2><div class="small muted">Ship gate items.</div></div>
+          <div><h2>Checklist</h2><div class="small muted">Things to check before a room is ready.</div></div>
           <a class="anchor small muted" href="#" aria-label="anchor">#</a>
         </div>
         <div class="section-body">
           <ul class="badges">
             <li><span class="badge badge-ok">Required</span> On-grid: all pivots aligned</li>
             <li><span class="badge badge-warn">Review</span> No z-fighting or leaks</li>
-            <li><span class="badge badge-ok">Required</span> Naming conforms to policy</li>
-            <li><span class="badge badge-ok">Required</span> Lighting budget respected</li>
+            <li><span class="badge badge-ok">Required</span> Names follow the rules</li>
+            <li><span class="badge badge-ok">Required</span> Lights stay within the budget</li>
           </ul>
         </div>
       </section>
 
-      <!-- STEPS -------------------------------------------------------------->
       <section class="rule-section" data-section="Steps">
         <div class="section-head">
           <div><h2>Steps</h2><div class="small muted">Process / how-to.</div></div>
@@ -201,10 +195,9 @@ return RoomModule</code></pre>
         </div>
       </section>
 
-      <!-- KPI TILES ---------------------------------------------------------->
       <section class="rule-section" data-section="KPI">
         <div class="section-head">
-          <div><h2>Budget Tiles</h2><div class="small muted">Performance targets per room.</div></div>
+          <div><h2>Budget Tiles</h2><div class="small muted">Performance targets for each room.</div></div>
           <a class="anchor small muted" href="#" aria-label="anchor">#</a>
         </div>
         <div class="section-body">
@@ -217,27 +210,25 @@ return RoomModule</code></pre>
         </div>
       </section>
 
-      <!-- SPLIT LAYOUT (text + aside) --------------------------------------->
       <section class="rule-section" data-section="Split">
         <div class="section-head">
-          <div><h2>Split Layout</h2><div class="small muted">Guidance + callouts on the side.</div></div>
+          <div><h2>Split Layout</h2><div class="small muted">Instructions with notes on the side.</div></div>
           <a class="anchor small muted" href="#" aria-label="anchor">#</a>
         </div>
         <div class="section-body">
           <div class="split">
             <div>
-              <p>Use this when you want primary instructions with a supportive sidebar (tips, warnings, file lists).</p>
-              <ul><li>Left: content</li><li>Right: supporting aside</li></ul>
+              <p>Use this for main instructions with tips, warnings, or file lists beside them.</p>
+              <ul><li>Left: content</li><li>Right: extra notes</li></ul>
             </div>
             <aside>
               <div class="callout" data-type="warn"><div>⚠️</div><div>Do not change the <code>PrimaryPart</code> of light prefabs.</div></div>
-              <div class="callout" data-type="ok" style="margin-top:.6rem"><div>✅</div><div>Furniture lives in <code>Furniture</code> folder.</div></div>
+              <div class="callout" data-type="ok" style="margin-top:.6rem"><div>✅</div><div>Keep furniture in the <code>Furniture</code> folder.</div></div>
             </aside>
           </div>
         </div>
       </section>
 
-      <!-- TABS (CSS-only) ---------------------------------------------------->
       <section class="rule-section" data-section="Tabs">
         <div class="section-head">
           <div><h2>Tabs</h2><div class="small muted">CSS-only, no JS needed.</div></div>
@@ -259,10 +250,9 @@ return RoomModule</code></pre>
         </div>
       </section>
 
-      <!-- DEFINITION LIST (spec) -------------------------------------------->
       <section class="rule-section" data-section="Definitions">
         <div class="section-head">
-          <div><h2>Spec Definitions</h2><div class="small muted">dl/dt/dd for parameter specs.</div></div>
+          <div><h2>Spec Definitions</h2><div class="small muted">Use dl/dt/dd to pair each setting with its value.</div></div>
           <a class="anchor small muted" href="#" aria-label="anchor">#</a>
         </div>
         <div class="section-body">
@@ -274,7 +264,6 @@ return RoomModule</code></pre>
         </div>
       </section>
 
-      <!-- RESOURCE CARDS ----------------------------------------------------->
       <section class="rule-section" data-section="Resources">
         <div class="section-head">
           <div><h2>Resource Links</h2><div class="small muted">Quick links as cards.</div></div>
@@ -283,15 +272,15 @@ return RoomModule</code></pre>
         <div class="section-body">
           <div class="cards">
             <a class="card" href="index.html"><div class="card-title">Main Rules</div><div class="card-meta muted">Building standards</div></a>
-            <a class="card" href="patterns.html"><div class="card-title">Kitchen Sink</div><div class="card-meta muted">All components</div></a>
+            <a class="card" href="templates.html"><div class="card-title">Kitchen Sink</div><div class="card-meta muted">All components</div></a>
           </div>
         </div>
       </section>
 
+      <p id="searchEmpty" class="empty-state" hidden>nothing matching, try a different search</p>
     </main>
   </div>
 
-  <script src="./scripts/java/anim.js" defer></script>
   <script src="./scripts/java/main.js"></script>
 </body>
 </html>
